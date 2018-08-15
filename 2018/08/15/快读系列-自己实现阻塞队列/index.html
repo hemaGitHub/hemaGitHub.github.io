@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
-<meta name="keywords" content="tomcat,报错">
+  <meta name="description" content="快读系列-自己实现阻塞队列0x00 摘要其实BlockingQueue简单来说就是一个put锁，一个take锁，还有一个放入的元素形成的Node队列。这篇文章，我们通过写代码实现一个简易的阻塞队列来进一步加深对阻塞队列的印象和理解。">
+<meta name="keywords" content="java,阻塞,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tomcat 7.x启动报错解决">
-<meta property="og:url" content="http://yoursite.com/2018/08/12/tomcat-error/index.html">
+<meta property="og:title" content="快读系列-自己实现阻塞队列">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/快读系列-自己实现阻塞队列/index.html">
 <meta property="og:site_name" content="迷路剑客的博客">
-<meta property="og:description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
+<meta property="og:description" content="快读系列-自己实现阻塞队列0x00 摘要其实BlockingQueue简单来说就是一个put锁，一个take锁，还有一个放入的元素形成的Node队列。这篇文章，我们通过写代码实现一个简易的阻塞队列来进一步加深对阻塞队列的印象和理解。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-12T08:52:23.000Z">
+<meta property="og:updated_time" content="2018-08-15T13:56:13.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tomcat 7.x启动报错解决">
-<meta name="twitter:description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
+<meta name="twitter:title" content="快读系列-自己实现阻塞队列">
+<meta name="twitter:description" content="快读系列-自己实现阻塞队列0x00 摘要其实BlockingQueue简单来说就是一个put锁，一个take锁，还有一个放入的元素形成的Node队列。这篇文章，我们通过写代码实现一个简易的阻塞队列来进一步加深对阻塞队列的印象和理解。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/12/tomcat-error/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/15/快读系列-自己实现阻塞队列/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>tomcat 7.x启动报错解决 | 迷路剑客的博客</title>
+  <title>快读系列-自己实现阻塞队列 | 迷路剑客的博客</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/tomcat-error/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/15/快读系列-自己实现阻塞队列/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="迷路剑客">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tomcat 7.x启动报错解决
+          <h1 class="post-title" itemprop="name headline">快读系列-自己实现阻塞队列
               
             
           </h1>
@@ -347,13 +347,9 @@
                 
               
 
-              <time title="创建时间：2018-08-12 16:38:47 / 修改时间：16:52:23" itemprop="dateCreated datePublished" datetime="2018-08-12T16:38:47+08:00">2018-08-12</time>
+              <time title="创建时间：2018-08-15 21:56:13" itemprop="dateCreated datePublished" datetime="2018-08-15T21:56:13+08:00">2018-08-15</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -369,7 +365,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tomcat/" itemprop="url" rel="index"><span itemprop="name">tomcat</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
 
                 
                 
@@ -405,7 +401,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">418</span>
+                <span title="本文字数">4.8k</span>
               
 
               
@@ -419,7 +415,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">4 分钟</span>
               
             </div>
           
@@ -439,9 +435,168 @@
       
 
       
-        <h1 id="tomcat-7-x启动报错解决"><a href="#tomcat-7-x启动报错解决" class="headerlink" title="tomcat 7.x启动报错解决"></a>tomcat 7.x启动报错解决</h1><h3 id="0x00-摘要"><a href="#0x00-摘要" class="headerlink" title="0x00 摘要"></a>0x00 摘要</h3><p>对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。<br><a id="more"></a></p>
-<h3 id="0x01-问题集锦"><a href="#0x01-问题集锦" class="headerlink" title="0x01 问题集锦"></a>0x01 问题集锦</h3><p>1.java.lang.IncompatibleClassChangeError: class org.springframework.scheduling.quartz.SimpleTriggerBean has interface org.quartz.SimpleTrigger as super class<br>参考<br><a href="https://stackoverflow.com/questions/15909703/spring-3-2-quartz-2-1-7-issue" target="_blank" rel="noopener">https://stackoverflow.com/questions/15909703/spring-3-2-quartz-2-1-7-issue</a><br>tomcat升级版本为7.0.39<br>同时需要确认quartz配置文件是用的SchedulerFactoryBean<br>这个问题是因为SimpleTriggerBean继承的SimpleTrigger在quartz2.x版本中变为了接口导致。</p>
+        <h1 id="快读系列-自己实现阻塞队列"><a href="#快读系列-自己实现阻塞队列" class="headerlink" title="快读系列-自己实现阻塞队列"></a>快读系列-自己实现阻塞队列</h1><h3 id="0x00-摘要"><a href="#0x00-摘要" class="headerlink" title="0x00 摘要"></a>0x00 摘要</h3><p>其实BlockingQueue简单来说就是一个put锁，一个take锁，还有一个放入的元素形成的Node队列。这篇文章，我们通过写代码实现一个简易的阻塞队列来进一步加深对阻塞队列的印象和理解。<br><a id="more"></a></p>
+<h3 id="0x01-CustomBlockingQueue"><a href="#0x01-CustomBlockingQueue" class="headerlink" title="0x01 CustomBlockingQueue"></a>0x01 CustomBlockingQueue</h3><p>在这里，我们通过代码简单实现了一个阻塞队列的基本功能：</p>
+<pre><code>/**
+ * Created by chengc on 2018/8/15.
+ * 其实BlockingQueue简单来说就是一个put锁，一个take锁，还有一个放入的元素形成的Node队列
+ * 1.offer
+ * 拿到锁的线程就把元素放入队列尾部，并释放锁；
+ * 最后唤醒（调用LockSupport.unpark）一个等待时间最长的take线程（在takeCondition队列内），将其移入take锁的队列中
+ *
+ * 2.take
+ * 拿到锁的线程，先判断元素个数是否为0 ，如果为0就在takeCondition上await（其实就是LockSupport.park来阻塞）。
+ * 直到offer线程唤醒，就能从队列中拿出元素，释放take锁并返回拿到的元素
+ */
+public class CustomBlockingQueue&lt;E&gt; {
+    private final int capacity;
+    private final AtomicInteger count = new AtomicInteger();
 
+    static class Node&lt;E&gt;{
+        E item;
+        Node&lt;E&gt; next;
+
+        Node(E x){
+            item = x;
+        }
+    }
+    private Node&lt;E&gt; head;
+    private Node&lt;E&gt; last;
+    private final ReentrantLock putLock = new ReentrantLock();
+    private final ReentrantLock takeLock = new ReentrantLock();
+    private final Condition takeCondition = takeLock.newCondition();
+
+    public CustomBlockingQueue(){
+        this(Integer.MAX_VALUE);
+    }
+    public CustomBlockingQueue(int capacity){
+        this.capacity = capacity;
+        last = head = new Node&lt;E&gt;(null);
+    }
+
+    public int size(){
+        return this.count.get();
+    }
+
+    public boolean offer(E item){
+        final AtomicInteger tmpCount = this.count;
+        putLock.lock();
+        if(tmpCount.get() &gt;= this.capacity){
+            return false;
+        }
+        this.enqueue(new Node&lt;E&gt;(item));
+        tmpCount.incrementAndGet();
+        putLock.unlock();
+        this.signalTake();
+        return true;
+    }
+
+    public E take() throws InterruptedException {
+        final AtomicInteger tmpCount = this.count;
+        takeLock.lock();
+        while(tmpCount.get() == 0){
+            takeCondition.await();
+        }
+        E result = this.dequeue();
+        tmpCount.decrementAndGet();
+        takeLock.unlock();
+        return result;
+    }
+
+    private void signalTake(){
+        this.takeLock.lock();
+        this.takeCondition.signal();
+        this.takeLock.unlock();
+    }
+
+
+    private void enqueue(Node&lt;E&gt; item){
+        last.next = item;
+        last = last.next;
+    }
+
+    private E dequeue(){
+        Node&lt;E&gt; firstDataNode = head.next;
+        head.next = null;
+        head = firstDataNode;
+        E result = firstDataNode.item;
+        firstDataNode.item = null;
+        return result;
+    }
+}
+</code></pre><h3 id="0x02-ProducerConsumer"><a href="#0x02-ProducerConsumer" class="headerlink" title="0x02 ProducerConsumer"></a>0x02 ProducerConsumer</h3><p>以下是该队列的测试代码，采用经典的生产者消费者模式，模拟一个生产者生产，两个消费者竞争消费的场景：</p>
+<pre><code>import org.apache.log4j.Logger;
+
+/**
+ * Created by chengc on 2018/8/15.
+ */
+public class ProducerConsumer {
+    public static void main(String args[]){
+
+        //Creating shared object
+        CustomBlockingQueue sharedQueue = new CustomBlockingQueue&lt;&gt;(5);
+
+        //Creating Producer and Consumer Thread
+        Thread prodThread = new Thread(new Producer(sharedQueue));
+        Thread consumer1 = new Thread(new Consumer(&quot;Shaoxing C&quot;,sharedQueue));
+        Thread consumer2 = new Thread(new Consumer(&quot;Yu Z&quot;,sharedQueue));
+
+        //Starting producer and Consumer thread
+        prodThread.start();
+        consumer1.start();
+        consumer2.start();
+    }
+
+}
+
+class Producer implements Runnable {
+    Logger logger = Logger.getLogger(ProducerConsumer.class);
+    private final CustomBlockingQueue sharedQueue;
+
+    public Producer(CustomBlockingQueue sharedQueue) {
+        this.sharedQueue = sharedQueue;
+    }
+
+    @Override
+    public void run() {
+        for(int i=0; i&lt;100; i++){
+            try {
+                String productName = &quot;Food&quot;+i;
+                System.out.println(&quot;start to produce:&quot;+productName+&quot;, size is &quot;+sharedQueue.size());
+                sharedQueue.offer(productName);
+                System.out.println(&quot;finished producing:&quot;+productName+&quot;, size is &quot;+sharedQueue.size());
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+//                    logger.log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
+}
+
+//Consumer Class in Java
+class Consumer implements Runnable{
+
+    private final CustomBlockingQueue sharedQueue;
+    private final String consumerName;
+    public Consumer (String name,CustomBlockingQueue sharedQueue) {
+        this.sharedQueue = sharedQueue;
+        consumerName = name;
+    }
+
+    @Override
+    public void run() {
+        while(true){
+            try {
+                System.out.println(consumerName + &quot; Consumed: &quot;+ sharedQueue.take()+&quot;, size is &quot;+sharedQueue.size());
+                Thread.sleep(2000);
+            } catch (InterruptedException ex) {
+//                    Logger.getLogger(Consumer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+}
+</code></pre>
       
     </div>
 
@@ -461,9 +616,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+            <a href="/tags/java/" rel="tag"># java</a>
           
-            <a href="/tags/报错/" rel="tag"># 报错</a>
+            <a href="/tags/阻塞/" rel="tag"># 阻塞</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
         </div>
       
@@ -476,8 +633,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/12/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/08/15/JavaClassLoader类详解/" rel="next" title="Java ClassLoader类详解">
+                <i class="fa fa-chevron-left"></i> Java ClassLoader类详解
               </a>
             
           </div>
@@ -485,10 +642,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/15/JavaClassLoader类详解/" rel="prev" title="Java ClassLoader类详解">
-                Java ClassLoader类详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -642,7 +795,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat-7-x启动报错解决"><span class="nav-number">1.</span> <span class="nav-text">tomcat 7.x启动报错解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-摘要"><span class="nav-number">1.0.1.</span> <span class="nav-text">0x00 摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-问题集锦"><span class="nav-number">1.0.2.</span> <span class="nav-text">0x01 问题集锦</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快读系列-自己实现阻塞队列"><span class="nav-number">1.</span> <span class="nav-text">快读系列-自己实现阻塞队列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-摘要"><span class="nav-number">1.0.1.</span> <span class="nav-text">0x00 摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-CustomBlockingQueue"><span class="nav-number">1.0.2.</span> <span class="nav-text">0x01 CustomBlockingQueue</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x02-ProducerConsumer"><span class="nav-number">1.0.3.</span> <span class="nav-text">0x02 ProducerConsumer</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

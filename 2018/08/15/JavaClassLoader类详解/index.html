@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
-<meta name="keywords" content="tomcat,报错">
+  <meta name="description" content="Java ClassLoader类详解0x00 摘要Java ClassLoader可以说是最重要的一个类，因为Jvm需要通过这个类和其实现类的方法来加载大部分类。网上资料太杂，看了半天也没弄明白，现在自己看了文档后写一篇个人见解。">
+<meta name="keywords" content="java,classloader,jvm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="tomcat 7.x启动报错解决">
-<meta property="og:url" content="http://yoursite.com/2018/08/12/tomcat-error/index.html">
+<meta property="og:title" content="Java ClassLoader类详解">
+<meta property="og:url" content="http://yoursite.com/2018/08/15/JavaClassLoader类详解/index.html">
 <meta property="og:site_name" content="迷路剑客的博客">
-<meta property="og:description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
+<meta property="og:description" content="Java ClassLoader类详解0x00 摘要Java ClassLoader可以说是最重要的一个类，因为Jvm需要通过这个类和其实现类的方法来加载大部分类。网上资料太杂，看了半天也没弄明白，现在自己看了文档后写一篇个人见解。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-12T08:52:23.000Z">
+<meta property="og:updated_time" content="2018-08-15T02:04:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="tomcat 7.x启动报错解决">
-<meta name="twitter:description" content="tomcat 7.x启动报错解决0x00 摘要对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。">
+<meta name="twitter:title" content="Java ClassLoader类详解">
+<meta name="twitter:description" content="Java ClassLoader类详解0x00 摘要Java ClassLoader可以说是最重要的一个类，因为Jvm需要通过这个类和其实现类的方法来加载大部分类。网上资料太杂，看了半天也没弄明白，现在自己看了文档后写一篇个人见解。">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/08/12/tomcat-error/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/08/15/JavaClassLoader类详解/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>tomcat 7.x启动报错解决 | 迷路剑客的博客</title>
+  <title>Java ClassLoader类详解 | 迷路剑客的博客</title>
   
 
 
@@ -305,7 +305,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/12/tomcat-error/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/15/JavaClassLoader类详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="迷路剑客">
@@ -322,7 +322,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">tomcat 7.x启动报错解决
+          <h1 class="post-title" itemprop="name headline">Java ClassLoader类详解
               
             
           </h1>
@@ -347,7 +347,7 @@
                 
               
 
-              <time title="创建时间：2018-08-12 16:38:47 / 修改时间：16:52:23" itemprop="dateCreated datePublished" datetime="2018-08-12T16:38:47+08:00">2018-08-12</time>
+              <time title="创建时间：2018-08-15 00:46:45 / 修改时间：10:04:24" itemprop="dateCreated datePublished" datetime="2018-08-15T00:46:45+08:00">2018-08-15</time>
             
 
             
@@ -369,7 +369,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/tomcat/" itemprop="url" rel="index"><span itemprop="name">tomcat</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a></span>
 
                 
                 
@@ -405,7 +405,7 @@
                 
                   <span class="post-meta-item-text">本文字数：</span>
                 
-                <span title="本文字数">418</span>
+                <span title="本文字数">7.1k</span>
               
 
               
@@ -419,7 +419,7 @@
                 
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
-                <span title="阅读时长">1 分钟</span>
+                <span title="阅读时长">6 分钟</span>
               
             </div>
           
@@ -439,9 +439,149 @@
       
 
       
-        <h1 id="tomcat-7-x启动报错解决"><a href="#tomcat-7-x启动报错解决" class="headerlink" title="tomcat 7.x启动报错解决"></a>tomcat 7.x启动报错解决</h1><h3 id="0x00-摘要"><a href="#0x00-摘要" class="headerlink" title="0x00 摘要"></a>0x00 摘要</h3><p>对实际项目中遇到的tomcat启动报错的各种问题做了记录，方便查阅。<br><a id="more"></a></p>
-<h3 id="0x01-问题集锦"><a href="#0x01-问题集锦" class="headerlink" title="0x01 问题集锦"></a>0x01 问题集锦</h3><p>1.java.lang.IncompatibleClassChangeError: class org.springframework.scheduling.quartz.SimpleTriggerBean has interface org.quartz.SimpleTrigger as super class<br>参考<br><a href="https://stackoverflow.com/questions/15909703/spring-3-2-quartz-2-1-7-issue" target="_blank" rel="noopener">https://stackoverflow.com/questions/15909703/spring-3-2-quartz-2-1-7-issue</a><br>tomcat升级版本为7.0.39<br>同时需要确认quartz配置文件是用的SchedulerFactoryBean<br>这个问题是因为SimpleTriggerBean继承的SimpleTrigger在quartz2.x版本中变为了接口导致。</p>
-
+        <h1 id="Java-ClassLoader类详解"><a href="#Java-ClassLoader类详解" class="headerlink" title="Java ClassLoader类详解"></a>Java ClassLoader类详解</h1><h3 id="0x00-摘要"><a href="#0x00-摘要" class="headerlink" title="0x00 摘要"></a>0x00 摘要</h3><p>Java ClassLoader可以说是最重要的一个类，因为Jvm需要通过这个类和其实现类的方法来加载大部分类。网上资料太杂，看了半天也没弄明白，现在自己看了文档后写一篇个人见解。<br><a id="more"></a></p>
+<h3 id="0x01-类注释翻译"><a href="#0x01-类注释翻译" class="headerlink" title="0x01 类注释翻译"></a>0x01 类注释翻译</h3><pre><code>/**
+ * A class loader is an object that is responsible for loading classes. The
+ * class &lt;tt&gt;ClassLoader&lt;/tt&gt; is an abstract class.  Given the &lt;a
+ * href=&quot;#name&quot;&gt;binary name&lt;/a&gt; of a class, a class loader should attempt to
+ * locate or generate data that constitutes a definition for the class.  A
+ * typical strategy is to transform the name into a file name and then read a
+ * &quot;class file&quot; of that name from a file system.
+ * /
+</code></pre><p>ClassLoader是这样的Object：负责加载类。ClassLoader是一个抽象类。只要输入一个类的二进制名，一个class loader就会尝试去定位或生成数据来构成一个类的定义。传统的策略是这样的：将名字作为一个file name，然后让class loader去从文件系统读这个class文件。</p>
+<pre><code>/**
+ *
+ * &lt;p&gt; Every {@link Class &lt;tt&gt;Class&lt;/tt&gt;} object contains a {@link
+ * Class#getClassLoader() reference} to the &lt;tt&gt;ClassLoader&lt;/tt&gt; that defined
+ * it.
+ * /
+</code></pre><p>每个class对象都可以通过getClassLoader()方法找到那个定义了（加载）本class的ClassLoader的引用。</p>
+<pre><code>/** 
+*
+* &lt;p&gt; &lt;tt&gt;Class&lt;/tt&gt; objects for array classes are not created by class
+* loaders, but are created automatically as required by the Java runtime.
+* The class loader for an array class, as returned by {@link
+* Class#getClassLoader()} is the same as the class loader for its element
+* type; if the element type is a primitive type, then the array class has no
+* class loader.
+*
+*/
+</code></pre><p>数组类不是通过ClassLoader加载创建，而是JVM按需在运行时自动创建。如果对某个数组类调用它的getClassLoader方法，结果会和数组类中持有的类元素调用结果相同；如果这些类元素的类型是基本类型，那么这样的数组类就没有ClassLoader。</p>
+<pre><code>/**
+* &lt;p&gt; Applications implement subclasses of &lt;tt&gt;ClassLoader&lt;/tt&gt; in order to
+* extend the manner in which the Java virtual machine dynamically loads
+* classes.
+*
+*/
+</code></pre><p>应用程序中可以实现ClassLoader的子类，来继承JVM自动加载类的方式。</p>
+<pre><code>/**
+* &lt;p&gt; Class loaders may typically be used by security managers to indicate
+* security domains.
+*
+*/
+</code></pre><p>ClassLoaders通常会被安全管理员用来表名安全的域。</p>
+<pre><code>/**
+* &lt;p&gt; The &lt;tt&gt;ClassLoader&lt;/tt&gt; class uses a delegation model to search for
+* classes and resources.  Each instance of &lt;tt&gt;ClassLoader&lt;/tt&gt; has an
+* associated parent class loader.  When requested to find a class or
+* resource, a &lt;tt&gt;ClassLoader&lt;/tt&gt; instance will delegate the search for the
+* class or resource to its parent class loader before attempting to find the
+* class or resource itself.  The virtual machine&apos;s built-in class loader,
+* called the &quot;bootstrap class loader&quot;, does not itself have a parent but may
+* serve as the parent of a &lt;tt&gt;ClassLoader&lt;/tt&gt; instance.
+*
+*/
+</code></pre><p>ClassLoader类使用了委派模式来查找类和资源。每个ClassLoader实例都有一个与之关联的父ClassLoader。当需要去查找一个类或资源的时候，一个ClassLoader实例会将这个查找动作委派给自己的父ClassLoader，如果父类无法完成查找才会尝试自己去查找这个类或是资源。虚拟机内嵌的ClassLoader成为“Boot Class Loader”，它本身是没有父ClassLoader，但它有时会作为其他ClassLoader实例的父ClassLoader发挥作用。</p>
+<pre><code>/**
+* &lt;p&gt; Class loaders that support concurrent loading of classes are known as
+* &lt;em&gt;parallel capable&lt;/em&gt; class loaders and are required to register
+* themselves at their class initialization time by invoking the
+* {@link
+* #registerAsParallelCapable &lt;tt&gt;ClassLoader.registerAsParallelCapable&lt;/tt&gt;}
+* method. Note that the &lt;tt&gt;ClassLoader&lt;/tt&gt; class is registered as parallel
+* capable by default. However, its subclasses still need to register themselves
+* if they are parallel capable. &lt;br&gt;
+* In environments in which the delegation model is not strictly
+* hierarchical, class loaders need to be parallel capable, otherwise class
+* loading can lead to deadlocks because the loader lock is held for the
+* duration of the class loading process (see {@link #loadClass
+* &lt;tt&gt;loadClass&lt;/tt&gt;} methods).
+*
+*
+*/
+</code></pre><p>支持并发加载类的ClassLoader称为并行加载类加载器，需要通过调用ClassLoader.registerAsParallelCapable方法在类初始化时注册自己。注意，ClassLoader这个类本身会默认以支持并行的方式注册。然而，如果他们的子类支持并行，那么他们还是需要注册自己。在不是严格继承的委派模型的场景下，ClassLoader需要支持并行，否则加载类的过程可导致死锁，因为loader锁会在加载类的过程中持续持有。详见loadClass方法。</p>
+<pre><code>/*
+* &lt;p&gt; Normally, the Java virtual machine loads classes from the local file
+* system in a platform-dependent manner.  For example, on UNIX systems, the
+* virtual machine loads classes from the directory defined by the
+* &lt;tt&gt;CLASSPATH&lt;/tt&gt; environment variable.
+*
+*/
+</code></pre><p>通常jvm通过“平台相关”的方式从本地文件系统中加载类。</p>
+<pre><code> /**
+ * &lt;p&gt; However, some classes may not originate from a file; they may originate
+ * from other sources, such as the network, or they could be constructed by an
+ * application.  The method {@link #defineClass(String, byte[], int, int)
+ * &lt;tt&gt;defineClass&lt;/tt&gt;} converts an array of bytes into an instance of class
+ * &lt;tt&gt;Class&lt;/tt&gt;. Instances of this newly defined class can be created using
+ * {@link Class#newInstance &lt;tt&gt;Class.newInstance&lt;/tt&gt;}.
+ *
+ * &lt;p&gt; The methods and constructors of objects created by a class loader may
+ * reference other classes.  To determine the class(es) referred to, the Java
+ * virtual machine invokes the {@link #loadClass &lt;tt&gt;loadClass&lt;/tt&gt;} method of
+ * the class loader that originally created the class.
+ *
+ * &lt;p&gt; For example, an application could create a network class loader to
+ * download class files from a server.  Sample code might look like:
+ *
+ * &lt;blockquote&gt;&lt;pre&gt;
+ *   ClassLoader loader&amp;nbsp;= new NetworkClassLoader(host,&amp;nbsp;port);
+ *   Object main&amp;nbsp;= loader.loadClass(&quot;Main&quot;, true).newInstance();
+ *       &amp;nbsp;.&amp;nbsp;.&amp;nbsp;.
+ * &lt;/pre&gt;&lt;/blockquote&gt;
+ *
+ * &lt;p&gt; The network class loader subclass must define the methods {@link
+ * #findClass &lt;tt&gt;findClass&lt;/tt&gt;} and &lt;tt&gt;loadClassData&lt;/tt&gt; to load a class
+ * from the network.  Once it has downloaded the bytes that make up the class,
+ * it should use the method {@link #defineClass &lt;tt&gt;defineClass&lt;/tt&gt;} to
+ * create a class instance.  A sample implementation is:
+ *
+ * &lt;blockquote&gt;&lt;pre&gt;
+ *     class NetworkClassLoader extends ClassLoader {
+ *         String host;
+ *         int port;
+ *
+ *         public Class findClass(String name) {
+ *             byte[] b = loadClassData(name);
+ *             return defineClass(name, b, 0, b.length);
+ *         }
+ *
+ *         private byte[] loadClassData(String name) {
+ *             // load the class data from the connection
+ *             &amp;nbsp;.&amp;nbsp;.&amp;nbsp;.
+ *         }
+ *     }
+ * &lt;/pre&gt;&lt;/blockquote&gt;
+ *
+ * &lt;h3&gt; &lt;a name=&quot;name&quot;&gt;Binary names&lt;/a&gt; &lt;/h3&gt;
+ *
+ * &lt;p&gt; Any class name provided as a {@link String} parameter to methods in
+ * &lt;tt&gt;ClassLoader&lt;/tt&gt; must be a binary name as defined by
+ * &lt;cite&gt;The Java&amp;trade; Language Specification&lt;/cite&gt;.
+ *
+ * &lt;p&gt; Examples of valid class names include:
+ * &lt;blockquote&gt;&lt;pre&gt;
+ *   &quot;java.lang.String&quot;
+ *   &quot;javax.swing.JSpinner$DefaultEditor&quot;
+ *   &quot;java.security.KeyStore$Builder$FileBuilder$1&quot;
+ *   &quot;java.net.URLClassLoader$3$1&quot;
+ * &lt;/pre&gt;&lt;/blockquote&gt;
+ *
+ * @see      #resolveClass(Class)
+ * @since 1.0
+ */
+public abstract class ClassLoader
+</code></pre>
       
     </div>
 
@@ -461,9 +601,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+            <a href="/tags/java/" rel="tag"># java</a>
           
-            <a href="/tags/报错/" rel="tag"># 报错</a>
+            <a href="/tags/classloader/" rel="tag"># classloader</a>
+          
+            <a href="/tags/jvm/" rel="tag"># jvm</a>
           
         </div>
       
@@ -476,8 +618,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/12/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/08/12/tomcat-error/" rel="next" title="tomcat 7.x启动报错解决">
+                <i class="fa fa-chevron-left"></i> tomcat 7.x启动报错解决
               </a>
             
           </div>
@@ -486,8 +628,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/08/15/JavaClassLoader类详解/" rel="prev" title="Java ClassLoader类详解">
-                Java ClassLoader类详解 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/08/15/快读系列-自己实现阻塞队列/" rel="prev" title="快读系列-自己实现阻塞队列">
+                快读系列-自己实现阻塞队列 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -642,7 +784,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#tomcat-7-x启动报错解决"><span class="nav-number">1.</span> <span class="nav-text">tomcat 7.x启动报错解决</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-摘要"><span class="nav-number">1.0.1.</span> <span class="nav-text">0x00 摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-问题集锦"><span class="nav-number">1.0.2.</span> <span class="nav-text">0x01 问题集锦</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-ClassLoader类详解"><span class="nav-number">1.</span> <span class="nav-text">Java ClassLoader类详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0x00-摘要"><span class="nav-number">1.0.1.</span> <span class="nav-text">0x00 摘要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#0x01-类注释翻译"><span class="nav-number">1.0.2.</span> <span class="nav-text">0x01 类注释翻译</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
